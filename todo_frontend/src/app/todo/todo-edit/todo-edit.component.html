@@ -1,9 +1,9 @@
-<div *ngIf="todo">
+<div *ngIf="todo" [formGroup]="formGroup">
   <h2>Todo Details</h2>
-  <div>id:{{ todo.id}} </div>
+  <div>id:{{ todo.id }}</div>
   <div>
     <label for="hero-name">Todo text: </label>
-    <input id="hero-name" [(ngModel)]="todo.text" placeholder="name">
+    <input id="hero-name" placeholder="name" formControlName="text" />
   </div>
   <button class="btn btn-success" (click)="update(todo)">Save</button>
 </div>

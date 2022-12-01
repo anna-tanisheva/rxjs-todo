@@ -1,18 +1,8 @@
-<ng-container *ngFor='let todo of (todos$ | async)'>
-  <div class='todo'  (click)='selectTodo(todo)'>
-    <span class=' todo_span mr-2'>{{ todo.id }} {{ todo.text }}</span>
-    <input class='todo_input' type='checkbox' checked='{{todo.isDone}}'>
-    <button class='todo_button ml-5' (click)='deleteTodo(todo.id)'>x</button>
+<ng-container *ngFor="let todo of todos$ | async">
+  <div class="todo">
+    <span class="todo_span mr-2">{{ todo.id }} {{ todo.text }}</span>
+    <input class="todo_input" type="checkbox" checked="{{ todo.isDone }}" />
+    <button class="todo_button ml-5" (click)="onDelete(todo.id)">x</button>
+    <button class="todo_button ml-5" (click)="onUpdate({ id: todo.id, text: todo.text, isDone: todo.isDone, createdOn: todo.createdOn, selected: todo.selected })">Edit</button>
   </div>
 </ng-container>
-
-
-<app-edit-todo
-  (updatedTodo)='updateTodo($event)'
-  [todo]="selectedTodo$ | async"
-></app-edit-todo>
-
-<div>
-  {{ selectedTodo$ | async | json }}
-</div>
-

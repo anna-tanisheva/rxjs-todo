@@ -1,11 +1,11 @@
 <div>
-  <form [formGroup]="todoForm" (submit)="onSubmit()">
+  <form [formGroup]="toDoForm" (ngSubmit)="submit()" #todoForm>
     <p>
-      <input class="input" type="text" id="value" name="value" formControlName="value" />
-      <input class="checkbox" type="checkbox"  name="checkbox" formControlName="checkbox" />
+      <input class="input" type="text" id="value" name="value" formControlName="text" />
+      <input class="checkbox" type="checkbox" name="checkbox" formControlName="checkbox" />
     </p>
 
-    <button class="btn btn-primary  mb-2" type="submit">Add Item</button><br />
+    <button class="btn btn-primary mb-2" type="submit">Add Item</button><br />
   </form>
   <button class="btn btn-primary" (click)="getAllTodos()">Get All Todos</button>
 </div>

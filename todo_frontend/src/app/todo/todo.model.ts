@@ -10,3 +10,9 @@ export interface ITodoRequest {
   text: string,
   isDone: boolean
 }
+
+export interface ITodoUpdateRequest {
+  id: string,
+  text: string,
+  isDone: boolean
+}

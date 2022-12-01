@@ -1,39 +1,39 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TodoService } from '../todo.service';
-import { ITodoRequest } from '../todo.model';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ITodoRequest } from "../todo.model";
+import { TodoService } from "../todo.service";
 
 @Component({
-  selector: 'app-todo-add',
-  templateUrl: 'todo-add.component.html',
-  styleUrls: ['todo-add.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-todo-add",
+  templateUrl: "todo-add.component.html",
+  styleUrls: ["todo-add.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
+export class TodoAddComponent implements OnInit {
+  toDoForm!: FormGroup;
+  @ViewChild("todoForm") todoForm!: ElementRef;
 
+  constructor(private todoService: TodoService) {}
 
-export class TodoAddComponent{
-  todoForm: FormGroup;
-
-  constructor(
-    private todoService: TodoService,
-    private formBuilder: FormBuilder
-  ) {
-    this.todoForm = this.formBuilder.group({
-      value: ['', Validators.required],
-      checkbox: [false, Validators.required]
+  ngOnInit(): void {
+    this.toDoForm = new FormGroup({
+      text: new FormControl("", [Validators.required]),
+      checkbox: new FormControl(false, [Validators.required]),
     });
   }
 
-  onSubmit(): void {
+  submit(): void {
     const formData: ITodoRequest = {
-      text: this.todoForm.get('value')?.value,
-      isDone: this.todoForm.get('checkbox')?.value
-    }
-    this.todoService.create2(formData).subscribe();
-    this.todoForm.reset();
+      text: this.toDoForm.get("text")?.value,
+      isDone: this.toDoForm.get("checkbox")?.value,
+    };
+    this.todoService.create(formData).subscribe();
+    this.todoForm.nativeElement[0].value = "";
+    this.todoForm.nativeElement[1].checked = false;
+    this.todoForm.nativeElement[1].value = false;
   }
 
   getAllTodos(): void {
-    this.todoService.uploadAllTodos().subscribe();
+    this.todoService.getAllTodos().subscribe();
   }
 }
